@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <template id="paystack_cancelled_payment" name="Cancelled Payment Page">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container oe_website_sale py-2">
+                        <div class="row pt-64 pb-64">
+                            <div class="col-12">
+                                <h1>
+                                    <t t-if="message">
+                                        There is some error in the payment process your order has been cancelled.<br/>
+                                        Error: <t t-esc="message"/>
+                                    </t>
+                                    <t t-else="">Because of some error in the payment process your order has been cancelled.</t>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="success_payment" name="Success Payment Page">
+            <t t-call="website.layout">
+                <div id="wrap">
+                   <div class="container oe_website_sale py-2">
+                        <h1><span>Order</span> <em t-field="order.name" /><span> Confirmed</span></h1>
+                        <div class="row">
+                            <div class="col-12 col-xl">
+                                <div class="oe_cart">
+                                    <div class="thanks_msg">
+                                        <h2>Thank you for your order!!!
+                                            <a role="button" class="btn btn-primary d-none d-md-inline-block" href="/shop/print" target="_blank" aria-label="Print" title="Print"><i class="fa fa-print"></i> Print</a>
+                                            <a role="button" class="btn btn-secondary d-none d-md-inline-block" href="/shop">Continue shopping</a>
+                                        </h2>
+                                    </div>
+                                    <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_confirmation_1"/>
+                                        <h3 class="text-start mt-3">
+                                        <strong>Payment Information:</strong>
+                                        </h3>
+                                        <t t-set="payment_tx_id" t-value="order.get_portal_last_transaction()"/>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2">
+                                                    <t t-esc="payment_tx_id.provider_id.display_as or payment_tx_id.provider_id.name" />
+                                                    </td>
+                                                    <td class="text-end" width="100">
+                                                        <strong>Total:</strong>
+                                                    </td>
+                                                    <td class="text-end" width="100">
+                                                        <strong t-field="payment_tx_id.amount" t-options="{'widget': 'monetary', 'display_currency': order.pricelist_id.currency_id}" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="paystack_acquirer_button">
+            <form action="/payment/redirect/mips" method="post">
+                <input type="hidden" name="name" t-att-value="name" />
+                <input type="hidden" name="amount" t-att-value="amount" />
+                <input type="hidden" name="description" t-att-value="description" />
+                <input type="hidden" name="Authorization" t-att-value="Authorization" />
+                <input type="hidden" name="Content-Type" value="application/json" />
+                <input type="hidden" name="item_reference" t-att-value="item_reference"/>
+            </form>
+        </template>
+
+    </data>
+</odoo>

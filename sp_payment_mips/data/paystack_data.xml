@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paystack_payment_acquirer" model="payment.provider">
+        <field name="name">Mips</field>
+        <field name="image_128" type="base64" file="sp_payment_mips/static/description/paystack_icon.png"/>
+        <field name="code">paystack</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="redirect_form_view_id" ref="paystack_acquirer_button"/>
+        <field name="support_manual_capture">False</field>
+        <field name="support_fees">True</field>
+        <field name="support_tokenization">False</field>
+    </record>
+
+    <record id="paystack_payment_method" model="account.payment.method">
+        <field name="name">Mips</field>
+        <field name="code">paystack</field>
+        <field name="payment_type">inbound</field>
+    </record>
+</odoo>

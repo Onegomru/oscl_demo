@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paystack_acquirer_form_view" model="ir.ui.view">
+            <field name="name">paystack.acquirer.form.view</field>
+            <field name="model">payment.provider</field>
+            <field name="inherit_id" ref="payment.payment_provider_form" />
+            <field name="arch" type="xml">
+                <xpath expr='//group[@name="provider_credentials"]' position='inside'>
+                    <group attrs="{'invisible': [('code', '!=', 'paystack')]}">
+                        <field name="paystack_secret_key" password="True" attrs="{'required':[('code', '=', 'paystack'), ('state', '!=', 'disabled')]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
